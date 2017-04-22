@@ -33,8 +33,11 @@ dependencies {
 
 // Make the .jar archive runnable
 jar {
+	baseName = 'game-of-life'
+
     manifest {
-        attributes 'Main-Class': 'fr.kazejiyu.gameoflife.Main'
+        attributes 'Implementation-Title': 'Game of Life',
+        		   'Main-Class': 'fr.kazejiyu.gameoflife.Main'
     }
     
     from {

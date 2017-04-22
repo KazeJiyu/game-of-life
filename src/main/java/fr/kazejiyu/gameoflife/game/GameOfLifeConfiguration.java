@@ -240,6 +240,12 @@ public class GameOfLifeConfiguration {
         				observers.toArray(new Observer[observers.size()]));
     }
 
+    /**
+     * Creates a world and makes it evolve until the specified condition is reached.
+     * 
+     * @param until
+     * 			Specifies when the evolution has to stop
+     */
     public void evolveUntil(Condition until) {
         stop = until.or(stop);
         evolve(Integer.MAX_VALUE);

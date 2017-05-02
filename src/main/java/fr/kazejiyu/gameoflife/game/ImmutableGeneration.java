@@ -35,15 +35,11 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import fr.kazejiyu.gameoflife.game.patterns.Pattern;
 import fr.kazejiyu.gameoflife.game.rules.Rule;
 import fr.kazejiyu.gameoflife.util.math.Coordinates;
-import rx.Observable;
-import rx.Observer;
-import rx.subjects.PublishSubject;
 
 /**
  * An immutable implementation of {@link Generation}.
@@ -206,32 +202,6 @@ public final class ImmutableGeneration implements Generation {
                 .collect(toSet());
 
         return new ImmutableGeneration(next, width, height, isCellAlive);
-    }
-    
-    @Override
-    @SafeVarargs
-    public final ImmutableGeneration iterate(int nbrGenerations, Predicate<Generation> stop, Observer<Generation>... observers) {
-        // Acts as a pipe between below Observable & given Observers
-        PublishSubject<Generation> pipe = PublishSubject.create();
-
-        // The pipe has to forward data to each observer
-        for (final Observer<Generation> observer : observers)
-            pipe.subscribe(observer);
-        
-        // a little trick to retrieve the last generation 
-        final ImmutableGeneration lastGeneration[] = new ImmutableGeneration[1];
-
-        Observable
-                .from(nextGenerations()::iterator)
-                .take(nbrGenerations)
-                // stop the evolution if the condition is fulfilled
-                .takeUntil(stop::test)
-                // retrieve the last generation
-                .doOnEach(world -> lastGeneration[0] = world.hasValue() ? (ImmutableGeneration) world.getValue() : lastGeneration[0]) 
-                // trigger the iteration & forward data to the pipe
-                .subscribe(pipe);
-
-        return lastGeneration[0];
     }
 
     @Override

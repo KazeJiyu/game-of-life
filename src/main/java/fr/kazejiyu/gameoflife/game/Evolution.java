@@ -38,7 +38,9 @@ import fr.kazejiyu.gameoflife.game.patterns.Pattern;
 import fr.kazejiyu.gameoflife.game.rules.Rule;
 import fr.kazejiyu.gameoflife.io.WorldObserver;
 import fr.kazejiyu.gameoflife.util.math.Coordinates;
+import rx.Observable;
 import rx.Observer;
+import rx.subjects.PublishSubject;
 
 /**
  * Makes easier to create and then evolve a {@link Generation}.
@@ -61,14 +63,14 @@ public class Evolution {
 
     /**
      * Whether the user has explictly defined the width.
-     * Used in {@link #initContent(Pattern)} in order to define
+     * Used in {@link #populateWith(Pattern)} in order to define
      * whether the size of the world should be set to pattern's one.
      */
     private boolean widthHasBeenDefined = false;
 
     /**
      * Whether the user has explictly defined the height.
-     * Used in {@link #initContent(Pattern)} in order to define
+     * Used in {@link #populateWith(Pattern)} in order to define
      * whether the size of the world should be set to pattern's one.
      */
     private boolean heightHasBeenDefined = false;
@@ -181,7 +183,7 @@ public class Evolution {
      * 
      * @return the current instance. May be used in order to chain method calls
      */
-    public Evolution initContent(Collection<Coordinates> cells) {
+    public Evolution populateWith(Collection<Coordinates> cells) {
         this.cells = cells;
         return this;
     }
@@ -194,7 +196,7 @@ public class Evolution {
      * 
      * @return the current instance. May be used in order to chain method calls
      */
-    public Evolution initContent(Pattern pattern) {
+    public Evolution populateWith(Pattern pattern) {
         cells = pattern.cells;
 
         width = widthHasBeenDefined ? max(width, pattern.width) : pattern.width;
@@ -232,12 +234,30 @@ public class Evolution {
      * @param generations
      * 			The number of generations to generate.
      */
-    @SuppressWarnings("unchecked")
-    public Generation evolve(int generations) {
-        return new ImmutableGeneration(cells, width, height, rule)
-        		.iterate(generations, 
-        				stop,
-        				observers.toArray(new Observer[observers.size()]));
+    public Generation evolve(int nbGenerations) {
+        // Acts as a pipe between below Observable & given Observers
+        PublishSubject<Generation> pipe = PublishSubject.create();
+
+        // The pipe has to forward data to each observer
+        for (final Observer<Generation> observer : observers)
+            pipe.subscribe(observer);
+        
+        // a little trick to retrieve the last generation 
+        final ImmutableGeneration lastGeneration[] = new ImmutableGeneration[1];
+        
+        Generation firstGeneration = new ImmutableGeneration(cells, width, height, rule);
+
+        Observable
+                .from(firstGeneration.nextGenerations()::iterator)
+                .take(nbGenerations)
+                // stop the evolution if the condition is fulfilled
+                .takeUntil(stop::test)
+                // retrieve the last generation
+                .doOnEach(world -> lastGeneration[0] = world.hasValue() ? (ImmutableGeneration) world.getValue() : lastGeneration[0])
+                // trigger the iteration & forward data to the pipe
+                .subscribe(pipe);
+        
+        return lastGeneration[0];
     }
 
     /**

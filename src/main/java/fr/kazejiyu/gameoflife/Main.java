@@ -26,7 +26,7 @@ public class Main {
                 // this method makes able to select the one to use
                 .followRule(Rule.GAME_OF_LIFE)
                 // Populate the world with a pattern located at its center
-                .initContent(Pattern.GLIDER.transformToCenter(WIDTH, HEIGHT))
+                .populateWith(Pattern.GLIDER.transformToCenter(WIDTH, HEIGHT))
                 // Print each generation in the console
                 .forEach(new PrintToStream())
                 // Write each generation in an XML file

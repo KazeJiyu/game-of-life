@@ -1,35 +1,8 @@
 package fr.kazejiyu.gameoflife.game;
 
-/*
- * MIT License
- * 
- * Copyright (c) 2017 Emmanuel CHEBBI
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import fr.kazejiyu.gameoflife.util.math.Coordinates;
-import rx.Observer;
 
 /**
  * Conway's game of life consists in a succession of generations of a 
@@ -100,73 +73,4 @@ public interface Generation {
     default Stream<Generation> nextGenerations() {
         return Stream.iterate(this, g -> g.nextGeneration());
     }
-
-    /**
-     * Returns the generation obtained after <code>nbrGenerations</code> iterations.
-     * 
-     * @param nbrGenerations
-     * 			The number of generations to skip.
-     * 
-     * @return the generation resulting of an evolution of <code>nbrGenerations</code>
-     */
-    default Generation iterate(int nbrGenerations) {
-        return iterate(nbrGenerations, cells -> {});
-    }
-
-    /**
-     * Returns the generation obtained after <code>nbrGenerations</code> iterations.
-     * <br><br>
-     * Calls <code>consumer</code> on each generation wandered.
-     * 
-     * @param nbrGenerations
-     * 			The number of generations to skip.
-     * @param consumer
-     * 			Will be called on each generation.
-     * 
-     * @return the generation resulting of an evolution of <code>nbrGenerations</code>
-     */
-    default Generation iterate(int nbrGenerations, Consumer<Generation> consumer) {
-        return nextGenerations()
-                    .limit(nbrGenerations)
-                    .peek(consumer::accept)
-                    .skip(nbrGenerations - 1)
-                    .findAny().get();
-    }
-
-    /**
-     * Returns the generation obtained after <code>nbrGenerations</code> iterations.
-     * <br><br>
-     * Calls the observers' <code>onNext()</code> method for each generation.
-     * 
-     * @param nbrGenerations
-     * 			The number of generations to skip.
-     * @param observers
-     * 			Will be notified of each generation.
-     * 
-     * @return the generation resulting of an evolution of <code>nbrGenerations</code>
-     */
-    @SuppressWarnings("unchecked")
-    default Generation iterate(int nbrGenerations, Observer<Generation>... observers) {
-        return iterate(nbrGenerations, g -> false, observers);
-    }
-
-    /**
-     * Returns the generation obtained after <code>nbrGenerations</code> iterations.
-     * <br><br>
-     * Calls the observers' <code>onNext()</code> method for each generation.
-     * <br><br>
-     * If the condition <code>stop</code> is satisfied before having generate 
-     * <code>nbrGenerations</code> generations, the evolution is stoped.
-     * 
-     * @param nbrGenerations
-     * 			The number of generations to skip.
-     * @param stop
-     * 			Indicates whether the evolution has to be stoped.
-     * @param observers
-     * 			Will be notified of each generation.
-     * 
-     * @return the generation resulting of an evolution of <code>nbrGenerations</code>
-     */
-    @SuppressWarnings("unchecked")
-    Generation iterate(int nbrGenerations, Predicate<Generation> stop, Observer<Generation>... observers);
 }

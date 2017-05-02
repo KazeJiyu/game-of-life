@@ -234,7 +234,7 @@ public class Evolution {
      */
     @SuppressWarnings("unchecked")
     public Generation evolve(int generations) {
-        return new ImmutableWorld(cells, width, height, rule)
+        return new ImmutableGeneration(cells, width, height, rule)
         		.iterate(generations, 
         				stop,
         				observers.toArray(new Observer[observers.size()]));

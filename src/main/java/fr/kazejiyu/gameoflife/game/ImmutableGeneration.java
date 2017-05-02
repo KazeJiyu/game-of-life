@@ -50,7 +50,7 @@ import rx.subjects.PublishSubject;
  * 
  * @author Emmanuel Chebbi
  */
-public final class ImmutableWorld implements Generation {
+public final class ImmutableGeneration implements Generation {
     /**
      * The cells of the generation that are alive.
      */
@@ -88,7 +88,7 @@ public final class ImmutableWorld implements Generation {
      * @param pattern
      * 			The pattern to initialize the world with.
      */
-    public ImmutableWorld(Pattern pattern) {
+    public ImmutableGeneration(Pattern pattern) {
         this(pattern.cells, pattern.width, pattern.height);
     }
 
@@ -102,7 +102,7 @@ public final class ImmutableWorld implements Generation {
      * @param height
      * 			The height of the world.
      */
-    public ImmutableWorld(Pattern pattern, int width, int height) {
+    public ImmutableGeneration(Pattern pattern, int width, int height) {
         this(pattern.cells, width, height);
     }
 
@@ -119,7 +119,7 @@ public final class ImmutableWorld implements Generation {
      * @param height
      * 			The height of the world.
      */
-    public ImmutableWorld(Collection<Coordinates> aliveCells, int width, int height) {
+    public ImmutableGeneration(Collection<Coordinates> aliveCells, int width, int height) {
         this(aliveCells, width, height, Rule.GAME_OF_LIFE);
     }
 
@@ -136,7 +136,7 @@ public final class ImmutableWorld implements Generation {
      * @param isCellAlive
      * 			The rule that determines whether a cell will be alive at next generation.
      */
-    public ImmutableWorld(Collection<Coordinates> aliveCells, int width, int height, BiPredicate<Generation, Entry<Coordinates, Long>> isCellAlive) {
+    public ImmutableGeneration(Collection<Coordinates> aliveCells, int width, int height, BiPredicate<Generation, Entry<Coordinates, Long>> isCellAlive) {
         this.width = width;
         this.height = height;
         this.isCellAlive = Objects.requireNonNull(isCellAlive);
@@ -195,7 +195,7 @@ public final class ImmutableWorld implements Generation {
     }
 
     @Override
-    public ImmutableWorld nextGeneration() {
+    public ImmutableGeneration nextGeneration() {
         Set<Coordinates> next = neighbours(aliveCells.stream())
                 // map each coord to its number of occurence
                 .collect(groupingBy(p -> p, counting()))
@@ -205,12 +205,12 @@ public final class ImmutableWorld implements Generation {
                 .map(e -> e.getKey())
                 .collect(toSet());
 
-        return new ImmutableWorld(next, width, height, isCellAlive);
+        return new ImmutableGeneration(next, width, height, isCellAlive);
     }
     
     @Override
     @SafeVarargs
-    public final ImmutableWorld iterate(int nbrGenerations, Predicate<Generation> stop, Observer<Generation>... observers) {
+    public final ImmutableGeneration iterate(int nbrGenerations, Predicate<Generation> stop, Observer<Generation>... observers) {
         // Acts as a pipe between below Observable & given Observers
         PublishSubject<Generation> pipe = PublishSubject.create();
 
@@ -219,7 +219,7 @@ public final class ImmutableWorld implements Generation {
             pipe.subscribe(observer);
         
         // a little trick to retrieve the last generation 
-        final ImmutableWorld lastGeneration[] = new ImmutableWorld[1];
+        final ImmutableGeneration lastGeneration[] = new ImmutableGeneration[1];
 
         Observable
                 .from(nextGenerations()::iterator)
@@ -227,7 +227,7 @@ public final class ImmutableWorld implements Generation {
                 // stop the evolution if the condition is fulfilled
                 .takeUntil(stop::test)
                 // retrieve the last generation
-                .doOnEach(world -> lastGeneration[0] = world.hasValue() ? (ImmutableWorld) world.getValue() : lastGeneration[0]) 
+                .doOnEach(world -> lastGeneration[0] = world.hasValue() ? (ImmutableGeneration) world.getValue() : lastGeneration[0]) 
                 // trigger the iteration & forward data to the pipe
                 .subscribe(pipe);
 
@@ -267,10 +267,10 @@ public final class ImmutableWorld implements Generation {
         if (this == obj)
             return true;
 
-        if (!(obj instanceof ImmutableWorld))
+        if (!(obj instanceof ImmutableGeneration))
             return false;
 
-        ImmutableWorld other = (ImmutableWorld) obj;
+        ImmutableGeneration other = (ImmutableGeneration) obj;
         if (height != other.height || width != other.width)
             return false;
 

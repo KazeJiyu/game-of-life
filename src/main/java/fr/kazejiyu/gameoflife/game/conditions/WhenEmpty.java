@@ -24,14 +24,14 @@ package fr.kazejiyu.gameoflife.game.conditions;
  * SOFTWARE.
  */
 
-import fr.kazejiyu.gameoflife.game.GameOfLifeConfiguration;
+import fr.kazejiyu.gameoflife.game.Evolution;
 import fr.kazejiyu.gameoflife.game.World;
 
 /**
  * Aimed to end a game's evolution if the current generation is empty.
  * 
  * This classe's name has been chosen in order to fit well with 
- * {@link GameOfLifeConfiguration#stop(java.util.function.Predicate)}'s syntax.
+ * {@link Evolution#stop(java.util.function.Predicate)}'s syntax.
  * 
  * @author Emmanuel Chebbi
  */

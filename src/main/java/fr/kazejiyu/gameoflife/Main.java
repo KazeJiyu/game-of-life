@@ -1,6 +1,6 @@
 package fr.kazejiyu.gameoflife;
 
-import fr.kazejiyu.gameoflife.game.GameOfLifeConfiguration;
+import fr.kazejiyu.gameoflife.game.Evolution;
 import fr.kazejiyu.gameoflife.game.conditions.WhenEmpty;
 import fr.kazejiyu.gameoflife.game.conditions.WhenRepeated;
 import fr.kazejiyu.gameoflife.game.conditions.WhenStable;
@@ -21,7 +21,7 @@ public class Main {
 
     public static void main(String[] args) {
         
-        new GameOfLifeConfiguration().size(WIDTH, HEIGHT)
+        new Evolution().size(WIDTH, HEIGHT)
                 // There are several variants of Conway's game of life.
                 // this method makes able to select the one to use
                 .followRule(Rule.GAME_OF_LIFE)

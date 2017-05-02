@@ -38,7 +38,7 @@ import rx.Observer;
  * This interface defines such a generation that lives in a 2D world.
  * <br><br>
  * Since configuring an entiere world can prove to be laborious &mdash; due to
- * the numerous arguments &mdash;, the {@link GameOfLifeConfiguration} helper
+ * the numerous arguments &mdash;, the {@link Evolution} helper
  * class can ease code writting.
  * 
  * @author Emmanuel Chebbi

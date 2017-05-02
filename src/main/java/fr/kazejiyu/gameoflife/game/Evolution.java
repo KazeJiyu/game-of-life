@@ -47,7 +47,7 @@ import rx.Observer;
  * 
  * @author Emmanuel Chebbi
  */
-public class GameOfLifeConfiguration {
+public class Evolution {
 	
     /**
      * The width of the world to generate
@@ -108,7 +108,7 @@ public class GameOfLifeConfiguration {
      * @see #height(int)
      * @see #size(int, int)
      */
-    public GameOfLifeConfiguration width(int width) {
+    public Evolution width(int width) {
         this.width = width;
         this.widthHasBeenDefined = true;
         return this;
@@ -125,7 +125,7 @@ public class GameOfLifeConfiguration {
      * @see #width(int)
      * @see #size(int, int)
      */
-    public GameOfLifeConfiguration height(int height) {
+    public Evolution height(int height) {
         this.height = height;
         this.heightHasBeenDefined = true;
         return this;
@@ -144,7 +144,7 @@ public class GameOfLifeConfiguration {
      * @see #width(int)
      * @see #height(int)
      */
-    public GameOfLifeConfiguration size(int width, int height) {
+    public Evolution size(int width, int height) {
         width(width);
         height(height);
         return this;
@@ -168,7 +168,7 @@ public class GameOfLifeConfiguration {
      * 
      * @return the current instance. May be used in order to chain method calls
      */
-    public GameOfLifeConfiguration followRule(BiPredicate<World, Entry<Coordinates, Long>> rule) {
+    public Evolution followRule(BiPredicate<World, Entry<Coordinates, Long>> rule) {
         this.rule = rule;
         return this;
     }
@@ -181,7 +181,7 @@ public class GameOfLifeConfiguration {
      * 
      * @return the current instance. May be used in order to chain method calls
      */
-    public GameOfLifeConfiguration initContent(Collection<Coordinates> cells) {
+    public Evolution initContent(Collection<Coordinates> cells) {
         this.cells = cells;
         return this;
     }
@@ -194,7 +194,7 @@ public class GameOfLifeConfiguration {
      * 
      * @return the current instance. May be used in order to chain method calls
      */
-    public GameOfLifeConfiguration initContent(Pattern pattern) {
+    public Evolution initContent(Pattern pattern) {
         cells = pattern.cells;
 
         width = widthHasBeenDefined ? max(width, pattern.width) : pattern.width;
@@ -204,7 +204,7 @@ public class GameOfLifeConfiguration {
     }
 
     @SafeVarargs
-    public final GameOfLifeConfiguration forEach(Observer<World>... obs) {
+    public final Evolution forEach(Observer<World>... obs) {
         for (Observer<World> o : obs)
             observers.add(o);
 
@@ -221,7 +221,7 @@ public class GameOfLifeConfiguration {
      * 
      * @return the current instance. May be used in order to chain method calls
      */
-    public GameOfLifeConfiguration stop(Predicate<World> predicate) {
+    public Evolution stop(Predicate<World> predicate) {
         this.stop = predicate;
         return this;
     }

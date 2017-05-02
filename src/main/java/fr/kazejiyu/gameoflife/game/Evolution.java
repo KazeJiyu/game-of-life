@@ -41,7 +41,7 @@ import fr.kazejiyu.gameoflife.util.math.Coordinates;
 import rx.Observer;
 
 /**
- * Makes easier to create and then evolve a {@link World}.
+ * Makes easier to create and then evolve a {@link Generation}.
  * 
  * This utility class uses the Builder design pattern.
  * 
@@ -82,20 +82,20 @@ public class Evolution {
      * The rule that defines whether a cell is alive at world's next generation.
      * @see Rule
      */
-    private BiPredicate<World, Entry<Coordinates, Long>> rule = Rule.GAME_OF_LIFE;
+    private BiPredicate<Generation, Entry<Coordinates, Long>> rule = Rule.GAME_OF_LIFE;
 
     /**
      * Indicates if the evolution of the world has to be stopped prematurely.
      * @see Condition
      */
-    private Predicate<World> stop = g -> false;
+    private Predicate<Generation> stop = g -> false;
 
     /**
      * Observers that will be notified with each generation of the world's evolution.
      * Should be used in order to process the evolution and then create a result.
      * @see WorldObserver
      */
-    private Collection<Observer<World>> observers = new ArrayList<>();
+    private Collection<Observer<Generation>> observers = new ArrayList<>();
 
     /**
      * Sets the width of the world.
@@ -168,7 +168,7 @@ public class Evolution {
      * 
      * @return the current instance. May be used in order to chain method calls
      */
-    public Evolution followRule(BiPredicate<World, Entry<Coordinates, Long>> rule) {
+    public Evolution followRule(BiPredicate<Generation, Entry<Coordinates, Long>> rule) {
         this.rule = rule;
         return this;
     }
@@ -204,8 +204,8 @@ public class Evolution {
     }
 
     @SafeVarargs
-    public final Evolution forEach(Observer<World>... obs) {
-        for (Observer<World> o : obs)
+    public final Evolution forEach(Observer<Generation>... obs) {
+        for (Observer<Generation> o : obs)
             observers.add(o);
 
         return this;
@@ -221,7 +221,7 @@ public class Evolution {
      * 
      * @return the current instance. May be used in order to chain method calls
      */
-    public Evolution stop(Predicate<World> predicate) {
+    public Evolution stop(Predicate<Generation> predicate) {
         this.stop = predicate;
         return this;
     }
@@ -233,7 +233,7 @@ public class Evolution {
      * 			The number of generations to generate.
      */
     @SuppressWarnings("unchecked")
-    public World evolve(int generations) {
+    public Generation evolve(int generations) {
         return new ImmutableWorld(cells, width, height, rule)
         		.iterate(generations, 
         				stop,

@@ -32,14 +32,14 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import fr.kazejiyu.gameoflife.game.World;
+import fr.kazejiyu.gameoflife.game.Generation;
 import fr.kazejiyu.gameoflife.game.rules.Rule;
 import fr.kazejiyu.gameoflife.util.math.CartesianCoordinates;
 import fr.kazejiyu.gameoflife.util.math.Coordinates;
 
 /**
  * Represents a certain configuration of cells that can be used in order
- * to populate a {@link World}. 
+ * to populate a {@link Generation}. 
  * <br><br>
  * Instances of this class are <b>immutables</b> and, once created, are
  * unconditionnaly thread-safe.
@@ -190,7 +190,7 @@ public final class Pattern {
     /**
      * Returns a new <code>Pattern</code> equal to this one, except that
      * the coordinates of the cells are changed in order to locate it
-     * at the center of a {@link World} which size equals the specified one.
+     * at the center of a {@link Generation} which size equals the specified one.
      * 
      * @param width
      * 			The width of the world.
@@ -206,7 +206,7 @@ public final class Pattern {
     /**
      * Returns a new <code>Pattern</code> equal to this one, except that
      * the coordinates of the cells are changed in order to locate it
-     * on the up right corner of a {@link World} which size equals the specified one.
+     * on the up right corner of a {@link Generation} which size equals the specified one.
      * 
      * @param width
      * 			The width of the world.

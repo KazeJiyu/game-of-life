@@ -1,5 +1,5 @@
 /**
- * Textual representations of {@link fr.kazejiyu.gameoflife.game.World}
+ * Textual representations of {@link fr.kazejiyu.gameoflife.game.Generation}
  * 
  * @author Emmanuel Chebbi
  */

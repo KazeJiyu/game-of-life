@@ -28,7 +28,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import fr.kazejiyu.gameoflife.game.Evolution;
-import fr.kazejiyu.gameoflife.game.World;
+import fr.kazejiyu.gameoflife.game.Generation;
 
 
 /**
@@ -41,13 +41,13 @@ import fr.kazejiyu.gameoflife.game.World;
  */
 public class WhenRepeated implements Condition {
 	
-    private static Set <World> evolution = new HashSet<>();
+    private static Set <Generation> evolution = new HashSet<>();
 
     /**
      * @return whether an equivalent {@code World} has already been processed
      */
     @Override
-    public boolean test(World world) {
+    public boolean test(Generation world) {
         return ! evolution.add(world);
     }
 }

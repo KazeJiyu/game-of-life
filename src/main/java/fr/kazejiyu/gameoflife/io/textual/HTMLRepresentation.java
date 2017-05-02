@@ -24,10 +24,10 @@ package fr.kazejiyu.gameoflife.io.textual;
  * SOFTWARE.
  */
 
-import fr.kazejiyu.gameoflife.game.World;
+import fr.kazejiyu.gameoflife.game.Generation;
 
 /**
- * An HTML representation of one or several {@link World}.
+ * An HTML representation of one or several {@link Generation}.
  * 
  * @author Emmanuel Chebbi
  */
@@ -59,7 +59,7 @@ public final class HTMLRepresentation extends TextualRepresentation {
     }
 
     @Override
-    public void onNext(World generation) {
+    public void onNext(Generation generation) {
         html.append("<h2>Génération " + (++currentGen) + "</h2>\n");
         html.append(asHTML(generation));
     }
@@ -67,7 +67,7 @@ public final class HTMLRepresentation extends TextualRepresentation {
     /**
      * @return the HTML representation of {@code game}
      */
-    private String asHTML(World game) {
+    private String asHTML(Generation game) {
         String content = game.toString();
         StringBuilder sb = new StringBuilder("<table border='1' style='color:white;border-collapse:collapse'>\n");
 

@@ -46,11 +46,11 @@ import rx.Observer;
 import rx.subjects.PublishSubject;
 
 /**
- * An immutable implementation of {@link World}.
+ * An immutable implementation of {@link Generation}.
  * 
  * @author Emmanuel Chebbi
  */
-public final class ImmutableWorld implements World {
+public final class ImmutableWorld implements Generation {
     /**
      * The cells of the generation that are alive.
      */
@@ -69,7 +69,7 @@ public final class ImmutableWorld implements World {
     /**
      * Helps to determine whether a cell will be alive at next generation.
      */
-    private final BiPredicate<World, Entry<Coordinates, Long>> isCellAlive;
+    private final BiPredicate<Generation, Entry<Coordinates, Long>> isCellAlive;
 
     /**
      * A set containing the coordinates from (-1,-1) to (1,1) except (0,0).
@@ -136,7 +136,7 @@ public final class ImmutableWorld implements World {
      * @param isCellAlive
      * 			The rule that determines whether a cell will be alive at next generation.
      */
-    public ImmutableWorld(Collection<Coordinates> aliveCells, int width, int height, BiPredicate<World, Entry<Coordinates, Long>> isCellAlive) {
+    public ImmutableWorld(Collection<Coordinates> aliveCells, int width, int height, BiPredicate<Generation, Entry<Coordinates, Long>> isCellAlive) {
         this.width = width;
         this.height = height;
         this.isCellAlive = Objects.requireNonNull(isCellAlive);
@@ -210,12 +210,12 @@ public final class ImmutableWorld implements World {
     
     @Override
     @SafeVarargs
-    public final ImmutableWorld iterate(int nbrGenerations, Predicate<World> stop, Observer<World>... observers) {
+    public final ImmutableWorld iterate(int nbrGenerations, Predicate<Generation> stop, Observer<Generation>... observers) {
         // Acts as a pipe between below Observable & given Observers
-        PublishSubject<World> pipe = PublishSubject.create();
+        PublishSubject<Generation> pipe = PublishSubject.create();
 
         // The pipe has to forward data to each observer
-        for (final Observer<World> observer : observers)
+        for (final Observer<Generation> observer : observers)
             pipe.subscribe(observer);
         
         // a little trick to retrieve the last generation 

@@ -27,16 +27,16 @@ package fr.kazejiyu.gameoflife.game.rules;
 import java.util.Map.Entry;
 import java.util.function.BiPredicate;
 
-import fr.kazejiyu.gameoflife.game.World;
+import fr.kazejiyu.gameoflife.game.Generation;
 import fr.kazejiyu.gameoflife.util.math.Coordinates;
 
 /**
- * The rules that a {@link World} can follow in order to determine whether
+ * The rules that a {@link Generation} can follow in order to determine whether
  * a cell will be alive at the next generation.
  * 
  * @author <a href="mailto:emmanuel.chebbi@outlook.fr">Emmanuel Chebbi</a>
  */
-public enum Rule implements BiPredicate<World, Entry<Coordinates, Long>> {
+public enum Rule implements BiPredicate<Generation, Entry<Coordinates, Long>> {
     
     /**
      * Basic rule of Conway's game of life.
@@ -49,7 +49,7 @@ public enum Rule implements BiPredicate<World, Entry<Coordinates, Long>> {
      */
     GAME_OF_LIFE() {
         @Override
-        public boolean test(World world, Entry<Coordinates, Long> e) {
+        public boolean test(Generation world, Entry<Coordinates, Long> e) {
             int nbrNeighbours = e.getValue().intValue();
             Coordinates coordinates = e.getKey();
 
@@ -68,7 +68,7 @@ public enum Rule implements BiPredicate<World, Entry<Coordinates, Long>> {
      */
     HIGH_LIFE() {
         @Override
-        public boolean test(World world, Entry<Coordinates, Long> e) {
+        public boolean test(Generation world, Entry<Coordinates, Long> e) {
             int nbrNeighbours = e.getValue().intValue();
             Coordinates coordinates = e.getKey();
 
@@ -90,7 +90,7 @@ public enum Rule implements BiPredicate<World, Entry<Coordinates, Long>> {
      */
     DAY_AND_NIGHT() {
         @Override
-        public boolean test(World world, Entry<Coordinates, Long> e) {
+        public boolean test(Generation world, Entry<Coordinates, Long> e) {
             int nbrNeighbours = e.getValue().intValue();
             Coordinates coordinates = e.getKey();
 
@@ -111,7 +111,7 @@ public enum Rule implements BiPredicate<World, Entry<Coordinates, Long>> {
      */
     LIFE_3_4() {
         @Override
-        public boolean test(World world, Entry<Coordinates, Long> e) {
+        public boolean test(Generation world, Entry<Coordinates, Long> e) {
             int nbrNeighbours = e.getValue().intValue();
 
             return nbrNeighbours == 3 || nbrNeighbours == 4;
@@ -127,7 +127,7 @@ public enum Rule implements BiPredicate<World, Entry<Coordinates, Long>> {
      */
     SEEDS() {
         @Override
-        public boolean test(World world, Entry<Coordinates, Long> e) {
+        public boolean test(Generation world, Entry<Coordinates, Long> e) {
             int nbrNeighbours = e.getValue().intValue();
             Coordinates coordinates = e.getKey();
 

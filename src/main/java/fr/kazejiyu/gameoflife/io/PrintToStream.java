@@ -26,10 +26,10 @@ package fr.kazejiyu.gameoflife.io;
 
 import java.io.PrintStream;
 
-import fr.kazejiyu.gameoflife.game.World;
+import fr.kazejiyu.gameoflife.game.Generation;
 
 /**
- * Prints the observed {@link World} to a given {@link PrintStream}.
+ * Prints the observed {@link Generation} to a given {@link PrintStream}.
  * 
  * @author Emmanuel Chebbi
  */
@@ -94,7 +94,7 @@ public class PrintToStream implements WorldObserver {
      * Prints {@code game} representation, preceded by the current generation number.
      */
     @Override
-    public void onNext(World game) {
+    public void onNext(Generation game) {
         out.println("Generation " + (++currentGen) + "");
         out.println(game);
         out.println();

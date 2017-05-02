@@ -28,7 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import fr.kazejiyu.gameoflife.game.World;
+import fr.kazejiyu.gameoflife.game.Generation;
 
 /**
  * A decorator that provides automatic save when the decored
@@ -95,7 +95,7 @@ public final class WrittenOnCompleted extends TextualRepresentation {
     }
 
     @Override
-    public void onNext(World t) {
+    public void onNext(Generation t) {
         toBeSaved.onNext(t);
     }
 }

@@ -25,7 +25,7 @@ package fr.kazejiyu.gameoflife.game.conditions;
  */
 
 import fr.kazejiyu.gameoflife.game.Evolution;
-import fr.kazejiyu.gameoflife.game.World;
+import fr.kazejiyu.gameoflife.game.Generation;
 
 /**
  * Aimed to end a game's evolution if the current generation is empty.
@@ -41,7 +41,7 @@ public class WhenEmpty implements Condition {
 	 * @return whether {@code world} is empty
 	 */
     @Override
-    public boolean test(World world) {
+    public boolean test(Generation world) {
         return world.nbOfCellsAlive() == 0;
     }
     

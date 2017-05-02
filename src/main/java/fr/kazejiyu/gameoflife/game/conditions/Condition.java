@@ -26,7 +26,7 @@ package fr.kazejiyu.gameoflife.game.conditions;
 
 import java.util.function.Predicate;
 
-import fr.kazejiyu.gameoflife.game.World;
+import fr.kazejiyu.gameoflife.game.Generation;
 
 /**
  * Defines a condition that ends a game's evolution.
@@ -36,6 +36,6 @@ import fr.kazejiyu.gameoflife.game.World;
  * 
  * @author Emmanuel CHebbi
  */
-public interface Condition extends Predicate<World> {
+public interface Condition extends Predicate<Generation> {
 	
 }

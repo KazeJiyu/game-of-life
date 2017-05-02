@@ -43,7 +43,7 @@ import rx.Observer;
  * 
  * @author Emmanuel Chebbi
  */
-public interface World {
+public interface Generation {
 	
     /**
      * Returns the number of columns within the world.
@@ -91,13 +91,13 @@ public interface World {
      * Returns the next generation.
      * @return the next generation
      */
-    World nextGeneration();
+    Generation nextGeneration();
 
     /**
      * Returns a stream that contains the next generations.
      * @return a stream that contains the next generations
      */
-    default Stream<World> nextGenerations() {
+    default Stream<Generation> nextGenerations() {
         return Stream.iterate(this, g -> g.nextGeneration());
     }
 
@@ -109,7 +109,7 @@ public interface World {
      * 
      * @return the generation resulting of an evolution of <code>nbrGenerations</code>
      */
-    default World iterate(int nbrGenerations) {
+    default Generation iterate(int nbrGenerations) {
         return iterate(nbrGenerations, cells -> {});
     }
 
@@ -125,7 +125,7 @@ public interface World {
      * 
      * @return the generation resulting of an evolution of <code>nbrGenerations</code>
      */
-    default World iterate(int nbrGenerations, Consumer<World> consumer) {
+    default Generation iterate(int nbrGenerations, Consumer<Generation> consumer) {
         return nextGenerations()
                     .limit(nbrGenerations)
                     .peek(consumer::accept)
@@ -146,7 +146,7 @@ public interface World {
      * @return the generation resulting of an evolution of <code>nbrGenerations</code>
      */
     @SuppressWarnings("unchecked")
-    default World iterate(int nbrGenerations, Observer<World>... observers) {
+    default Generation iterate(int nbrGenerations, Observer<Generation>... observers) {
         return iterate(nbrGenerations, g -> false, observers);
     }
 
@@ -168,5 +168,5 @@ public interface World {
      * @return the generation resulting of an evolution of <code>nbrGenerations</code>
      */
     @SuppressWarnings("unchecked")
-    World iterate(int nbrGenerations, Predicate<World> stop, Observer<World>... observers);
+    Generation iterate(int nbrGenerations, Predicate<Generation> stop, Observer<Generation>... observers);
 }

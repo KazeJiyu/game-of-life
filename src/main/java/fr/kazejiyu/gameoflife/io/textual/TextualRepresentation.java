@@ -28,11 +28,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import fr.kazejiyu.gameoflife.game.World;
+import fr.kazejiyu.gameoflife.game.Generation;
 import fr.kazejiyu.gameoflife.io.WorldObserver;
 
 /**
- * A textual representation of one or several {@link World}s.
+ * A textual representation of one or several {@link Generation}s.
  * <br><br>
  * Such a representation can be written to the disk.
  * 

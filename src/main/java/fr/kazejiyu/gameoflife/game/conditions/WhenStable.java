@@ -25,7 +25,7 @@ package fr.kazejiyu.gameoflife.game.conditions;
  */
 
 import fr.kazejiyu.gameoflife.game.Evolution;
-import fr.kazejiyu.gameoflife.game.World;
+import fr.kazejiyu.gameoflife.game.Generation;
 
 /**
  * Aimed to end a game's evolution if the current generation is the same than the previous one.
@@ -37,14 +37,14 @@ import fr.kazejiyu.gameoflife.game.World;
  */
 public class WhenStable implements Condition {
 
-	private static World last = null;
+	private static Generation last = null;
 
 	/**
 	 * @return whether {@code world} is equivalent to the one given
 	 * 		   the last time this method has been called
 	 */
     @Override
-    public boolean test(World world) {
+    public boolean test(Generation world) {
         boolean equals = world.equals(last);
         last = world;
 

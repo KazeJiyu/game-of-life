@@ -24,10 +24,10 @@ package fr.kazejiyu.gameoflife.io.textual;
  * SOFTWARE.
  */
 
-import fr.kazejiyu.gameoflife.game.World;
+import fr.kazejiyu.gameoflife.game.Generation;
 
 /**
- * An XML representation of one or several {@link World}s.
+ * An XML representation of one or several {@link Generation}s.
  * 
  * @author Emmanuel Chebbi
  */
@@ -57,7 +57,7 @@ public final class XMLRepresentation extends TextualRepresentation {
     }
 
     @Override
-    public void onNext(World generation) {
+    public void onNext(Generation generation) {
         xml.append("    <world generation=\"" + (++currentGen) + "\">\n");
         xml.append(asXML(generation));
         xml.append("    </world\n");
@@ -66,7 +66,7 @@ public final class XMLRepresentation extends TextualRepresentation {
     /**
      * @return the XML representation of {@code game}
      */
-    private String asXML(World game) {
+    private String asXML(Generation game) {
         String content = game.toString();
         StringBuilder sb = new StringBuilder("        <cells>\n");
 

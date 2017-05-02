@@ -24,16 +24,16 @@ package fr.kazejiyu.gameoflife.io;
  * SOFTWARE.
  */
 
-import fr.kazejiyu.gameoflife.game.World;
+import fr.kazejiyu.gameoflife.game.Generation;
 import rx.Observer;
 
 /**
- * Represents anything that can observer a {@link World} instance.
+ * Represents anything that can observer a {@link Generation} instance.
  * 
  * This is a dummy interface that wraps a {@code Observer<World>} within a more concrete name.
  * 
  * @author Emmanuel Chebbi
  */
-public interface WorldObserver extends Observer<World> {
+public interface WorldObserver extends Observer<Generation> {
 
 }

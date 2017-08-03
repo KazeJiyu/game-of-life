@@ -14,10 +14,10 @@ more specifically to the [RxJava](https://github.com/ReactiveX/RxJava) library.
 _*Disclaimer*_: This project has not been designed to be as simple as possible, but to produce a Game of Life easily configurable.
 If you're looking for a short and reactive Java 8 implementation, take a look at this gist : [ReactiveGameOfLife.java](https://gist.github.com/timyates/112627bf46040a8099ac) by [Tim Yates](https://gist.github.com/timyates).
 
-The [World](https://github.com/KazeJiyu/game-of-life/blob/master/src/main/java/fr/kazejiyu/gameoflife/game/World.java)
+The [Generation](https://github.com/KazeJiyu/game-of-life/blob/master/src/main/java/fr/kazejiyu/gameoflife/game/Generation.java)
 class represents a set of cells, which is equivalent to one Game's generation. It provides several methods
 to launch the evolution (i.e. generate next generations) with tailored arguments. However, since the various parameters
-can confuse the code, the class [GameOfLifeConfiguration](https://github.com/KazeJiyu/game-of-life/blob/master/src/main/java/fr/kazejiyu/gameoflife/game/GameOfLifeConfiguration.java)
+can confuse the code, the class [Evolution](https://github.com/KazeJiyu/game-of-life/blob/master/src/main/java/fr/kazejiyu/gameoflife/game/Evolution.java)
 provides a higher-level interface to configure a Game of Life.
 
 The following code snippet shows how to:
@@ -34,12 +34,12 @@ public class Main {
 
     public static void main(String[] args) {
         
-        new GameOfLifeConfiguration().size(WIDTH, HEIGHT)
+        new Evolution().size(WIDTH, HEIGHT)
                 // There are several variants of Conway's game of life.
                 // this method makes able to select the one to use
                 .followRule(Rule.GAME_OF_LIFE)
                 // Populate the world with a pattern located at its center
-                .initContent(Pattern.GLIDER.transformToCenter(WIDTH, HEIGHT))
+                .populateWith(Pattern.GLIDER.transformToCenter(WIDTH, HEIGHT))
                 // Print each generation in the console
                 .forEach(new PrintToStream())
                 // Write each generation in an XML file
@@ -52,7 +52,7 @@ public class Main {
                 // - the world becomes empty
                 .stop(new WhenRepeated().or(new WhenStable()).or(new WhenEmpty()))
                 // Generate 100 generations
-                .evolve(100);         
+                .evolve(100);
     }
 }
 ```

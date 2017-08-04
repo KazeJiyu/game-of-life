@@ -60,7 +60,7 @@ public class Main {
 ## How to run
 
 The code presented above correspond to the class [fr.kazejiyu.gameoflife.Main](https://github.com/KazeJiyu/game-of-life/blob/master/src/main/java/fr/kazejiyu/gameoflife/Main.java).
-It can easily be run by executing these steps:
+It can be run easily by executing these steps:
 
 - Clone the repository:
 ```

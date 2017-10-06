@@ -71,6 +71,6 @@ public interface Generation {
      * @return a stream that contains the next generations
      */
     default Stream<Generation> nextGenerations() {
-        return Stream.iterate(this, g -> g.nextGeneration());
+        return Stream.iterate(this, Generation::nextGeneration);
     }
 }

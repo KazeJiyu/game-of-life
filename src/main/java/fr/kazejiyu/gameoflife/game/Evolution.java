@@ -243,7 +243,7 @@ public class Evolution {
             pipe.subscribe(observer);
         
         // a little trick to retrieve the last generation 
-        final ImmutableGeneration lastGeneration[] = new ImmutableGeneration[1];
+        final ImmutableGeneration[] lastGeneration = new ImmutableGeneration[1];
         
         Generation firstGeneration = new ImmutableGeneration(cells, width, height, rule);
 

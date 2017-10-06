@@ -1,5 +1,11 @@
 package fr.kazejiyu.gameoflife.game.patterns;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 /*
  * MIT License
  * 
@@ -76,9 +82,7 @@ public final class Pattern {
      *          The cells that compose the pattern.
      */
     private Pattern(int width, int height, CartesianCoordinates... cells) {
-        this.width = width;
-        this.height = height;
-        this.cells = Collections.unmodifiableSet(new HashSet<Coordinates>(Arrays.asList(cells)));
+    	this(width, height, Arrays.asList(cells));
     }
 
     /**
@@ -95,6 +99,32 @@ public final class Pattern {
         this.width = width;
         this.height = height;
         this.cells = Collections.unmodifiableSet(new HashSet<Coordinates>(cells));
+    }
+    
+    public static Pattern fromString(String representation, char cell) {
+    	int row = 0; 
+		int width = 0;
+    	Set <Coordinates> cells = new HashSet<>();
+    	
+    	for(String line : representation.split("\\r?\\n")) {
+    		for(int i = 0 ; i < line.length() ; i++)
+    			if( line.charAt(i) == cell )
+    				cells.add(new CartesianCoordinates(i, row));
+			
+			++row;
+			width = Math.max(width, line.length());
+    	}
+    	
+    	return new Pattern(width, row, cells);
+    }
+    
+    public static Pattern fromFile(String path) throws IOException {
+    	return Pattern.fromFile(path, StandardCharsets.UTF_8);
+    }
+    
+    public static Pattern fromFile(String path, Charset encoding) throws IOException {
+    	byte[] encoded = Files.readAllBytes(Paths.get(path));
+    	return Pattern.fromString(new String(encoded, encoding), '.');
     }
     
     /**
@@ -167,7 +197,7 @@ public final class Pattern {
      *  
      * @return the cells of the pattern having their origin at <code>origin</code>
      */
-    public Pattern transform(Coordinates origin) {
+    public Pattern transformToOrigin(Coordinates origin) {
         return transform(cell -> cell.add(origin));
     }
 
@@ -183,8 +213,8 @@ public final class Pattern {
      * 	
      * @return the cells of the pattern having their origin at (x,y)
      */
-    public Pattern transform(int x, int y) {
-        return transform(Coordinates.of(x, y));
+    public Pattern transformToOrigin(int x, int y) {
+        return transformToOrigin(Coordinates.of(x, y));
     }
 
     /**
@@ -200,7 +230,7 @@ public final class Pattern {
      * @return the coordinates of the cells of the pattern to locate it at the center of a world.
      */
     public Pattern transformToCenter(int width, int height) {
-        return transform(width/2 - this.width/2, height/2 - this.height/2);
+        return transformToOrigin(width/2 - this.width/2, height/2 - this.height/2);
     }
 
     /**
@@ -210,13 +240,10 @@ public final class Pattern {
      * 
      * @param width
      * 			The width of the world.
-     * @param height
-     * 			The height of the world.
-     * 
      * @return the coordinates of the cells of the pattern to locate it on the upper right corner of a world.
      */
-    public Pattern transformToUpRight(int width, int height) {
-        return transform(width - this.width, 0);
+    public Pattern transformToUpRight(int width) {
+        return transformToOrigin(width - this.width, 0);
     }
 
     @Override

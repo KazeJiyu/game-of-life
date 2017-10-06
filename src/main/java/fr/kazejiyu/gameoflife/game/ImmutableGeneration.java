@@ -165,7 +165,7 @@ public final class ImmutableGeneration implements Generation {
      * @see #neighbours(Stream)
      */
     private static Set<Coordinates> neighbourDeltas() {
-        Set<Coordinates> deltas = new HashSet<Coordinates>();
+        Set<Coordinates> deltas = new HashSet<>();
 
         for (int x = -1; x <= 1; ++x)
             for (int y = -1; y <= 1; ++y)
@@ -198,7 +198,7 @@ public final class ImmutableGeneration implements Generation {
                 .entrySet().stream()
                 // keep alive cells
                 .filter(e -> isCellAlive.test(this, e))
-                .map(e -> e.getKey())
+                .map(Entry::getKey)
                 .collect(toSet());
 
         return new ImmutableGeneration(next, width, height, isCellAlive);

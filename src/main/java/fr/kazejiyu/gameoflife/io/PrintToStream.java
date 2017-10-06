@@ -51,6 +51,8 @@ public class PrintToStream implements WorldObserver {
     /**
      * Creates a new {@code PrintToStream} that prints the {@code World} representation to
      * {@code out}, but prints error to the standard error stream.
+     * <br><br>
+     * <b>Important</b>: it is user's responsibility to close the stream.
      * 
      * @param out
      * 			The stream into which the world representations have to be printed
@@ -62,6 +64,8 @@ public class PrintToStream implements WorldObserver {
     /**
      * Creates a new {@code PrintToStream} that prints the {@code World} representation to
      * {@code out}, ands errors to {@code err}.
+     * <br><br>
+     * <b>Important</b>: it is user's responsibility to close the streams.
      * 
      * @param out
      * 			The stream into which the world representations have to be printed
@@ -79,7 +83,7 @@ public class PrintToStream implements WorldObserver {
      */
     @Override
     public void onCompleted() {
-
+    	// Has nothing to do : closing the stream is of user's responsibility
     }
 
     /**

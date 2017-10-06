@@ -43,7 +43,7 @@ public abstract class TextualRepresentation implements WorldObserver {
     /**
      * @return the textual representation that can be written
      */
-    abstract protected String textToWrite();
+    protected abstract String textToWrite();
 
     /**
      * Writes the representation into the file located at <code>filePath</code>.

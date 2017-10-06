@@ -37,7 +37,7 @@ import fr.kazejiyu.gameoflife.game.Generation;
  */
 public class WhenStable implements Condition {
 
-	private static Generation last = null;
+	private Generation last = null;
 
 	/**
 	 * @return whether {@code world} is equivalent to the one given

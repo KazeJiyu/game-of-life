@@ -1,6 +1,6 @@
 /**
  * Classes that make possible to run Conway's game of life.
  * 
- * @author Emmanuel Chebbo
+ * @author Emmanuel CHEBBI
  */
 package fr.kazejiyu.gameoflife.game;

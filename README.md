@@ -11,14 +11,14 @@ more specifically to the [RxJava](https://github.com/ReactiveX/RxJava) library.
 
 ## Implementation
 
-_*Disclaimer*_: This project has not been designed to be as simple as possible, but to produce a Game of Life easily configurable.
-If you're looking for a short and reactive Java 8 implementation, take a look at this gist : [ReactiveGameOfLife.java](https://gist.github.com/timyates/112627bf46040a8099ac) by [Tim Yates](https://gist.github.com/timyates).
+> _*Disclaimer*_: This project has not been designed to be as simple as possible, but to produce a Game of Life easily configurable.
+> If you're looking for a short and reactive Java 8 implementation, take a look at this gist : [ReactiveGameOfLife.java](https://gist.github.com/timyates/112627bf46040a8099ac) by [Tim Yates](https://gist.github.com/timyates).
 
 The [Generation](https://github.com/KazeJiyu/game-of-life/blob/master/src/main/java/fr/kazejiyu/gameoflife/game/Generation.java)
 class represents a set of cells, which is equivalent to one Game's generation. It provides several methods
-to launch the evolution (i.e. generate next generations) with tailored arguments. However, since the various parameters
-can confuse the code, the class [Evolution](https://github.com/KazeJiyu/game-of-life/blob/master/src/main/java/fr/kazejiyu/gameoflife/game/Evolution.java)
-provides a higher-level interface to configure a Game of Life.
+to launch the evolution (i.e. to generate next generations) with tailored arguments. However, since the various parameters
+can confuse the code, the [Evolution](https://github.com/KazeJiyu/game-of-life/blob/master/src/main/java/fr/kazejiyu/gameoflife/game/Evolution.java)
+class provides a higher-level interface to configure a Game of Life.
 
 The following code snippet shows how to:
 
@@ -59,8 +59,8 @@ public class Main {
 
 ## How to run
 
-The code presented above correspond to the class [fr.kazejiyu.gameoflife.Main](https://github.com/KazeJiyu/game-of-life/blob/master/src/main/java/fr/kazejiyu/gameoflife/Main.java).
-It can be run easily by executing these steps:
+The code presented above corresponds to the class [fr.kazejiyu.gameoflife.Main](https://github.com/KazeJiyu/game-of-life/blob/master/src/main/java/fr/kazejiyu/gameoflife/Main.java).
+It can be run easily by executing the following steps:
 
 - Clone the repository:
 ```

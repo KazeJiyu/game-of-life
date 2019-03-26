@@ -11,19 +11,20 @@ more specifically to the [RxJava](https://github.com/ReactiveX/RxJava) library.
 
 ## Implementation
 
-> _*Disclaimer*_: This project has not been designed to be as simple as possible, but to produce a Game of Life easily configurable.
-> If you're looking for a short and reactive Java 8 implementation, take a look at this gist : [ReactiveGameOfLife.java](https://gist.github.com/timyates/112627bf46040a8099ac) by [Tim Yates](https://gist.github.com/timyates).
+> _*Disclaimer*_: this project has not been designed to be as simple as possible, but to produce a Game of Life easily configurable.
+> If you're looking for a short and reactive Java 8 implementation, take a look at this gist: 
+> - [ReactiveGameOfLife.java](https://gist.github.com/timyates/112627bf46040a8099ac) by [Tim Yates](https://gist.github.com/timyates).
 
 The [Generation](https://github.com/KazeJiyu/game-of-life/blob/master/src/main/java/fr/kazejiyu/gameoflife/game/Generation.java)
 class represents a set of cells, which is equivalent to one Game's generation. It provides several methods
-to launch the evolution (i.e. to generate next generations) with tailored arguments. However, since the various parameters
+to launch the evolution (i.e. to generate next generations) with tailored arguments. Since the various parameters
 can confuse the code, the [Evolution](https://github.com/KazeJiyu/game-of-life/blob/master/src/main/java/fr/kazejiyu/gameoflife/game/Evolution.java)
 class provides a higher-level interface to configure a Game of Life.
 
 The following code snippet shows how to:
 
 - Create a 6*6 game area,
-- Locate a [Glider](https://en.wikipedia.org/wiki/Glider_(Conway's_Life)) at its center,
+- Place a [Glider](https://en.wikipedia.org/wiki/Glider_(Conway's_Life)) at its center,
 - Launch the evolution with tailored options.
 
 ```java
@@ -36,11 +37,11 @@ public class Main {
         
         new Evolution().size(WIDTH, HEIGHT)
                 // There are several variants of Conway's game of life.
-                // this method makes able to select the one to use
+                // followRule allows to select the one to use (custom ones can be defined too)
                 .followRule(Rule.GAME_OF_LIFE)
-                // Populate the world with a pattern located at its center
+                // Populate the world with a glider located at its center
                 .populateWith(Pattern.GLIDER.transformToCenter(WIDTH, HEIGHT))
-                // Print each generation in the console
+                // Print each generation to the console
                 .forEach(new PrintToStream())
                 // Write each generation in an XML file
                 .forEach(new WrittenOnCompleted("test.xml", new XMLRepresentation()))
@@ -64,9 +65,9 @@ It can be run easily by executing the following steps:
 
 - Clone the repository:
 ```
-git clone https://github.com/KazeJiyu/game-of-life
+git clone https://github.com/echebbi/game-of-life
 ```
-- Run the following command to build the sources:
+- Build the sources:
 ```
 cd game-of-life/
 ./gradlew build
